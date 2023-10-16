@@ -148,8 +148,8 @@ namespace WindowsNativeRawInputWrapper.Types
             ScanCode = Enum.IsDefined(typeof(KeyboardScanCode), rawKeyboard.MakeCode)
                 ? (KeyboardScanCode)rawKeyboard.MakeCode : KeyboardScanCode.UnknownScanCode;
 
-            IsKeyDown = (rawKeyboard.Flags & (ushort)PlatformEnumerations.ScanCodeFlag.RI_KEY_MAKE) == (ushort)PlatformEnumerations.ScanCodeFlag.RI_KEY_MAKE;
-            IsKeyUp = (rawKeyboard.Flags & (ushort)PlatformEnumerations.ScanCodeFlag.RI_KEY_BREAK) == (ushort)PlatformEnumerations.ScanCodeFlag.RI_KEY_BREAK;
+            IsKeyDown = (rawKeyboard.Flags & 0x01) == (ushort)PlatformEnumerations.ScanCodeFlag.RI_KEY_MAKE;
+            IsKeyUp = (rawKeyboard.Flags & 0x01) == (ushort)PlatformEnumerations.ScanCodeFlag.RI_KEY_BREAK;
         }
     }
 }
