@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\programming\vs\Win32RawInputWrapper\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="D:\programming\vs\Win32RawInputWrapper\.editorconfig" />
+  </ItemGroup>
+
+</Project>
