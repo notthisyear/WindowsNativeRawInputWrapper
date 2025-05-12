@@ -19,7 +19,7 @@ namespace WindowsNativeRawInputWrapper
 
         public static bool TryGetAllInputDevices(out List<InputDevice> devices, out string errorMessage)
         {
-            devices = new List<InputDevice>();
+            devices = [];
             uint numberOfDevices = 0;
             var deviceListSize = (uint)Marshal.SizeOf(typeof(RAWINPUTDEVICELIST));
             _ = Interops.GetRawInputDeviceList(IntPtr.Zero, ref numberOfDevices, deviceListSize);
@@ -66,9 +66,8 @@ namespace WindowsNativeRawInputWrapper
             deviceInformation = default;
             var deviceHandle = ToPtr(device.DeviceId);
             if (!TryGetDeviceName(deviceHandle, out var deviceName, out errorMessage))
-            {
                 return false;
-            }
+
             if (!TryGetDeviceInfo(deviceHandle, out var deviceInfo, out errorMessage))
                 return false;
 
@@ -100,7 +99,8 @@ namespace WindowsNativeRawInputWrapper
                     Usage = deviceInfo.hid.Usage
                 },
                 _ => throw new NotImplementedException(),
-            }; ;
+            };
+
             return true;
         }
 
@@ -172,7 +172,7 @@ namespace WindowsNativeRawInputWrapper
             {
                 deviceDescription = key.GetValue("DeviceDesc")?.ToString() ?? string.Empty;
                 if (!string.IsNullOrEmpty(deviceDescription) && deviceDescription.Contains(';'))
-                    deviceDescription = deviceDescription[(deviceDescription.IndexOf(";") + 1)..];
+                    deviceDescription = deviceDescription[(deviceDescription.IndexOf(';') + 1)..];
                 else
                     errorMessage = "DeviceDesc either missing or has unexpected format";
             }
@@ -180,7 +180,6 @@ namespace WindowsNativeRawInputWrapper
             {
                 errorMessage = "Could not find matching key in registry";
             }
-
             return string.IsNullOrEmpty(errorMessage);
         }
 
@@ -283,15 +282,19 @@ namespace WindowsNativeRawInputWrapper
                     break;
 
                 case DeviceType.Keyboard:
-                    var keyboard = Marshal.PtrToStructure<RAWKEYBOARD>(IntPtr.Add(dataBuffer, (int)rawHeaderSize));
+                    var keyboard = Marshal.PtrToStructure<RAWKEYBOARD>(IntPtr.Add(dataBuffer, (int)rawHeaderSize)); Marshal.FreeHGlobal(dataBuffer);
                     rawInput = new RawKeyboardInput(header, keyboard);
                     break;
 
                 case DeviceType.Hid:
                     break;
+
                 default:
+                    Marshal.FreeHGlobal(dataBuffer);
                     throw new NotImplementedException();
             }
+
+            Marshal.FreeHGlobal(dataBuffer);
             return true;
         }
         #endregion

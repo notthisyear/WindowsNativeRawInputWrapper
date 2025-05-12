@@ -32,7 +32,9 @@ namespace WindowsNativeRawInputWrapper.Types
         public KeyboardDeviceInfo(InputDevice device, string deviceDescription, uint type) : base(device, deviceDescription)
         {
             if (Enum.IsDefined(typeof(PlatformEnumerations.KeyboardType), type))
+            {
                 KeyboardType = ((PlatformEnumerations.KeyboardType)type).ToInternalKeyboardType();
+            }
             else
             {
                 KeyboardType = Type.None;
@@ -60,7 +62,7 @@ namespace WindowsNativeRawInputWrapper.Types
 
         internal MouseDeviceInfo(InputDevice device, string deviceDescription, uint rawIdentificationBitfield) : base(device, deviceDescription)
         {
-            DeviceIdentification = new();
+            DeviceIdentification = [];
             foreach (var flag in Enum.GetValues<PlatformEnumerations.MouseDeviceIdentificationFlag>())
             {
                 if ((rawIdentificationBitfield & (uint)flag) == (uint)flag)

@@ -1,26 +1,26 @@
-﻿using static WindowsNativeRawInputWrapper.PlatformTypes.PlatformEnumerations;
+﻿using WindowsNativeRawInputWrapper.PlatformTypes;
 
 namespace WindowsNativeRawInputWrapper
 {
     internal abstract record UsagePageAndIdBase
     {
-        public abstract HidUsagePage UsagePage { get; }
+        public abstract PlatformEnumerations.HidUsagePage UsagePage { get; }
 
         public abstract ushort UsageId { get; }
 
-        public static UsagePageAndIdBase GetGenericDesktopControlUsagePageAndFlag(HidGenericDesktopControls usageId)
+        public static UsagePageAndIdBase GetGenericDesktopControlUsagePageAndFlag(PlatformEnumerations.HidGenericDesktopControls usageId)
             => new GenericDesktopControlUsagePageAndId(usageId);
     }
 
     internal record GenericDesktopControlUsagePageAndId : UsagePageAndIdBase
     {
-        public override HidUsagePage UsagePage => HidUsagePage.GenericDesktopControls;
+        public override PlatformEnumerations.HidUsagePage UsagePage => PlatformEnumerations.HidUsagePage.GenericDesktopControls;
 
         public override ushort UsageId => (ushort)UsageIdType;
 
-        public HidGenericDesktopControls UsageIdType { get; }
+        public PlatformEnumerations.HidGenericDesktopControls UsageIdType { get; }
 
-        public GenericDesktopControlUsagePageAndId(HidGenericDesktopControls usageIdType)
+        public GenericDesktopControlUsagePageAndId(PlatformEnumerations.HidGenericDesktopControls usageIdType)
         {
             UsageIdType = usageIdType;
         }

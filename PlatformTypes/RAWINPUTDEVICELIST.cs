@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using WindowsNativeRawInputWrapper;
+﻿using System.Runtime.InteropServices;
 
 namespace WindowsNativeRawInputWrapper.PlatformTypes
 {
