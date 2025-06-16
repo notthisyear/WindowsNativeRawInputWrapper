@@ -282,7 +282,7 @@ namespace WindowsNativeRawInputWrapper
                     break;
 
                 case DeviceType.Keyboard:
-                    var keyboard = Marshal.PtrToStructure<RAWKEYBOARD>(IntPtr.Add(dataBuffer, (int)rawHeaderSize)); Marshal.FreeHGlobal(dataBuffer);
+                    var keyboard = Marshal.PtrToStructure<RAWKEYBOARD>(IntPtr.Add(dataBuffer, (int)rawHeaderSize));
                     rawInput = new RawKeyboardInput(header, keyboard);
                     break;
 
